@@ -16,8 +16,14 @@ class AnswersController < ApplicationController
       render json: {"Error": "La pregunta está resuelta"}, status: 422
     else
       user = find_user_by_token
-      Answer.create_answer_to_question(request.request_parameters[:content], params[:question_id], user)
+      answer = Answer.create_answer_to_question(request.request_parameters[:content], params[:question_id], user)
+      render json: answer, status: 201
     end
+  end
+
+  def index
+    answers = Answer.get_answers_for_question(params[:question_id])
+    render json: answers
   end
 
 

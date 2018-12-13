@@ -13,10 +13,15 @@ class Answer < ApplicationRecord
   def self.mark_as_correct(answer_id)
     answer = find_by(id: answer_id)
     answer.ckeked = true
+    answer.save
   end
 
   def self.create_answer_to_question(content, question_id, user)
     self.create(content: content, question_id: question_id, user_id: user.id)
+  end
+
+  def self.get_answers_for_question(question_id)
+    where(question_id: question_id)
   end
 
 end
