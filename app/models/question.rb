@@ -25,4 +25,14 @@ class Question < ApplicationRecord
     question.save
   end
 
+  def self.mark_as_resolved(id)
+    question = find_by(id: id)
+    question.status = true
+    question.save
+  end
+
+  def self.is_answered(id)
+    find_by(id: id, status: true)
+  end
+
 end

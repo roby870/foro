@@ -1,5 +1,12 @@
 Rails.application.routes.draw do
-  resources :questions, :answers
-  resources :sessions, :users, only: [:create] #SOLAMENTE USA ESTA RUTA
-end                            #LO MISMO PARA BEFORE ACTION
+  resources :questions
+  resources :sessions, :users, only: [:create]
+  resources :questions do
+    member do
+      put 'resolve'
+    end
+    resources :answers
+  end
+
+end
 #TESTEAR SOLAMENTE EL MODELO

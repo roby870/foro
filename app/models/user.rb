@@ -24,6 +24,12 @@ class User < ApplicationRecord
     end
   end
 
+  def self.save_token(user, token)
+    user.token = token
+    user.token_created_at = DateTime.now
+    user.save
+  end
+
   def self.check_token(token)
     user = find_by(token: token)
     if user
@@ -35,6 +41,10 @@ class User < ApplicationRecord
     else
       false
     end
+  end
+
+  def self.find_by_token(token)
+    find_by(token: token)
   end
 
   def self.create_user(username, password, screen_name, email)

@@ -11,9 +11,7 @@ class SessionsController < ApplicationController
     if user = User.authenticate(params[:username], params[:password])
       #puts distance_of_time_in_words_to_now(u.token_created_at)
       token = SecureRandom.uuid.gsub(/\-/,'')
-      user.token = token
-      user.token_created_at = DateTime.now
-      user.save
+      User.save_token(user, token)
       response.headers["Content-Type"] = "application/json"
       response.headers["X-QA-Key"] = token
       #render response.body no funciona
