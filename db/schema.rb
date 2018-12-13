@@ -13,10 +13,10 @@
 ActiveRecord::Schema.define(version: 2018_12_10_200200) do
 
   create_table "answers", force: :cascade do |t|
-    t.text "content"
+    t.text "content", null: false
     t.boolean "cheked", default: false
-    t.integer "question_id"
-    t.integer "user_id"
+    t.integer "question_id", null: false
+    t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["question_id"], name: "index_answers_on_question_id"
@@ -24,20 +24,20 @@ ActiveRecord::Schema.define(version: 2018_12_10_200200) do
   end
 
   create_table "questions", force: :cascade do |t|
-    t.string "title"
-    t.text "description"
+    t.string "title", null: false
+    t.text "description", null: false
     t.boolean "status", default: false
-    t.integer "user_id"
+    t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_questions_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "username"
-    t.string "password_hash"
-    t.string "screen_name"
-    t.string "email"
+    t.string "username", null: false
+    t.string "password_hash", null: false
+    t.string "screen_name", null: false
+    t.string "email", null: false
     t.string "token"
     t.datetime "token_created_at"
     t.datetime "created_at", null: false

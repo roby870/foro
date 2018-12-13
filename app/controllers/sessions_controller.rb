@@ -16,8 +16,8 @@ class SessionsController < ApplicationController
       user.save
       response.headers["Content-Type"] = "application/json"
       response.headers["X-QA-Key"] = token
-      #render response.body no funciona 
-      render json: user#, status:402 #lo armo "a mano" el json para respetar json api?
+      #render response.body no funciona
+      render json: user, status:200
     else
       render json: {"Error": "Los datos proporcionados para atuenticar al usuario son incorrectos"}, status: 422
     end

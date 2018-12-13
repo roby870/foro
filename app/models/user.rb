@@ -13,7 +13,7 @@ class User < ApplicationRecord
   has_many :answers
 
   def self.authenticate(u, p)
-    if user = self.find_by(username: u)
+    if user = find_by(username: u)
       if (user.password == p)
         user
       else
@@ -25,7 +25,7 @@ class User < ApplicationRecord
   end
 
   def self.check_token(token)
-    user = User.find_by(token: token)
+    user = find_by(token: token)
     if user
       if ((Time.zone.now - user.token_created_at).to_i / 60) > 30
         false
@@ -38,7 +38,7 @@ class User < ApplicationRecord
   end
 
   def self.create_user(username, password, screen_name, email)
-    User.create(username: username,password_hash: Password.create(password),screen_name: screen_name,email: email)
+    create(username: username,password_hash: Password.create(password),screen_name: screen_name,email: email)
   end
 
   def password
