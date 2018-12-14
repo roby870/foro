@@ -43,4 +43,7 @@ class Answer < ApplicationRecord
     answer.destroy
   end
 
+  def self.question_has_answers(id)
+    find_by(question_id: id)
+  end
 end

@@ -14,7 +14,6 @@ class SessionsController < ApplicationController
       User.save_token(user, token)
       response.headers["Content-Type"] = "application/json"
       response.headers["X-QA-Key"] = token
-      #render response.body no funciona
       render json: user, status:200
     else
       render json: {"Error": "Los datos proporcionados para atuenticar al usuario son incorrectos"}, status: 422

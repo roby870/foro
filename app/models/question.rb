@@ -36,4 +36,13 @@ class Question < ApplicationRecord
     find_by(id: id, status: true)
   end
 
+  def self.delete_question(id)
+      question = find_by(id: id)
+      question.destroy
+  end
+
+  def self.exists(id)
+    find_by(id: id)
+  end
+
 end
