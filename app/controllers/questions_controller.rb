@@ -13,8 +13,12 @@ before_action :check_token, only: [:create, :update, :resolve]
 
   def create
     user = find_user_by_token
-    Question.create_question(request.request_parameters[:title], request.request_parameters[:description], user.id)
-    render json: {"Operacion exitosa": "pregunta creada"}, status: 201
+    question = Question.create_question(request.request_parameters[:title], request.request_parameters[:description], user.id)
+    if question.valid?
+      render json: {"Operacion exitosa": "pregunta creada"}, status: 201
+    else
+      render status 422
+    end
   end
 
   def update

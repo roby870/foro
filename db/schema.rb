@@ -14,7 +14,7 @@ ActiveRecord::Schema.define(version: 2018_12_10_200200) do
 
   create_table "answers", force: :cascade do |t|
     t.text "content", null: false
-    t.boolean "cheked", default: false
+    t.boolean "checked", default: false
     t.integer "question_id", null: false
     t.integer "user_id", null: false
     t.datetime "created_at", null: false

@@ -6,6 +6,7 @@ class Question < ApplicationRecord
   has_many :answers
   has_many :users, through: :answers
   belongs_to :user
+  validates_associated :user
 
   def self.create_question(title, description, user_id)
     self.create(title: title, description: description, user_id: user_id)
