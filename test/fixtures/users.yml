@@ -4,3 +4,10 @@ juan:
   password_hash: "sddf245hrkjh2e"
   screen_name: juan
   email: "juan@hotmail.com"
+
+pepe:
+  id: 2
+  username: pepe
+  password_hash: "3443df2hr443jh2e"
+  screen_name: pepe
+  email: "pepe@gmail.com"
