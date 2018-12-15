@@ -55,7 +55,11 @@ class Question < ApplicationRecord
 
   def self.fifty_needing_help
     #limit(50).left_outer_joins(:answers).select(:id, :title, :description, :status, count(answers.id) ).where(status: false).group(:id).order("count(answers.id) ASC")
+
     limit(50).left_outer_joins(:answers).select(:id, :title, :description, :status, 'count(answers.id) as answers_count').where(status: false).group(:id).order("count(answers.id) ASC")
+    #limit(50).left_outer_joins(:answers).select(:id, :title, :description, :status, count(:answer_id)).where(status: false).group(:id).order("count(answers.id) ASC")
+
+
     #limit(50).left_outer_joins(:answers).distinct.select('questions.id, COUNT(answers.id) AS answers_count').group('questions.id')
   end
 
