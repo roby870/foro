@@ -1,0 +1,5 @@
+respuesta:
+  id: 1
+  content: "You can do that in several ways: As you shown with << but that is not the usual way. With string interpolation source = "#{ROOT_DIR}/#{project}/App.config" with + source = "#{ROOT_DIR}/" + project + "/App.config" The second method seems to be more efficient in term of memory/speed from what I've seen (not measured though). All three methods will throw an uninitialized constant error when ROOT_DIR is nil. When dealing with pathnames, you may want to use File.join to avoid messin up with pathname separator. In the end, it is a matter of taste."
+  question_id: 1
+  user_id: 1

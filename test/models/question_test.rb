@@ -22,8 +22,8 @@ class QuestionTest < ActiveSupport::TestCase
   end
 
   test "las preguntas se asignan correctamente al usuario que las crea" do
-    assert Question.check_user_has_question(users(:juan), 1)
-    assert_not Question.check_user_has_question(users(:pepe), 1)
+    assert Question.check_user_has_question(users(:juan), questions(:pregunta).id)
+    assert_not Question.check_user_has_question(users(:pepe), questions(:pregunta).id)
   end
 
   test "actualizar titulo" do
