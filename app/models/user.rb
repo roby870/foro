@@ -12,6 +12,14 @@ class User < ApplicationRecord
   has_many :questions
   has_many :answers
 
+  def self.create_user(username, password, screen_name, email)
+    create(username: username,password_hash: Password.create(password),screen_name: screen_name,email: email)
+  end
+
+  def password
+    Password.new(self.password_hash)
+  end
+
   def self.authenticate(u, p)
     if user = find_by(username: u)
       if (user.password == p)
@@ -46,16 +54,5 @@ class User < ApplicationRecord
   def self.find_by_token(token)
     find_by(token: token)
   end
-
-  def self.create_user(username, password, screen_name, email)
-    create(username: username,password_hash: Password.create(password),screen_name: screen_name,email: email)
-  end
-
-  def password
-    Password.new(self.password_hash)
-  end
-
-
-
 
 end

@@ -12,13 +12,38 @@ before_action :check_token, only: [:create, :update, :resolve, :destroy]
   end
 
   def create
-    user = find_user_by_token
-    question = Question.create_question(request.request_parameters[:title], request.request_parameters[:description], user.id)
-    if question.valid?
-      render json: {"Operacion exitosa": "pregunta creada"}, status: 201
+    if(request.request_parameters[:title].nil? | request.request_parameters[:description].nil?) #VALIDAR SIEMPRE LA PRESENCIA DE LOS PARAMETROS
+      render json: {"Faltan parametros": "no se pudo crear"}, status: 422
     else
-      render status 422
+      user = find_user_by_token
+      question = Question.create_question(request.request_parameters[:title], request.request_parameters[:description], user.id)
+      if question.valid?
+        render json: {"Operacion exitosa": "pregunta creada"}, status: 201
+      else
+        render status 422
+      end
     end
+  end
+
+  def index
+
+    if request.request_parameters[:sort].nil?
+      questions = Question.fifty_latest
+      render json: questions
+    elsif request.request_parameters[:sort].eql? "latest"
+      questions = Question.fifty_latest
+      render json: questions
+    elsif request.request_parameters[:sort].eql? "pending_first"
+       questions = Question.fifty_pending
+       render json: questions
+    elsif request.request_parameters[:sort].eql? "needing_help"
+      questions = Question.fifty_needing_help
+      render json: questions
+      #render json: (questions.collect  {|q| "Title: " + q.title + " Description: " +  q.description +  " Resuelta: " + q.status.to_s})
+    else
+      render json: {"error": "parametro invalido"}, status: 422
+    end
+
   end
 
   def update
@@ -46,6 +71,7 @@ before_action :check_token, only: [:create, :update, :resolve, :destroy]
       if (Answer.is_answer_of(request.request_parameters[:answer_id],params[:id]))
         Answer.mark_as_correct(request.request_parameters[:answer_id])
         Question.mark_as_resolved(params[:id])
+        render status: 200
       else
         render json: {"eror": "la pregunta y la respuesta indicadas en los parametros no se corresponden"}, status: 422
       end

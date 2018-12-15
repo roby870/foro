@@ -14,7 +14,7 @@ class Answer < ApplicationRecord
 
   def self.mark_as_correct(answer_id)
     answer = find_by(id: answer_id)
-    answer.ckecked = true
+    answer.checked = true
     answer.save
   end
 

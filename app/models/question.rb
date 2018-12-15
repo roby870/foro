@@ -45,4 +45,19 @@ class Question < ApplicationRecord
     find_by(id: id)
   end
 
+  def self.fifty_latest
+    limit(50).left_outer_joins(:answers).select(:id, :title, :description, :status, 'count(answers.id) as answers_count').order(created_at: :desc).group(:id)
+  end
+
+  def self.fifty_pending
+    limit(50).left_outer_joins(:answers).select(:id, :title, :description, :status, 'count(answers.id) as answers_count').order(status: :asc, created_at: :desc).group(:id)
+  end
+
+  def self.fifty_needing_help
+    #limit(50).left_outer_joins(:answers).select(:id, :title, :description, :status, count(answers.id) ).where(status: false).group(:id).order("count(answers.id) ASC")
+    limit(50).left_outer_joins(:answers).select(:id, :title, :description, :status, 'count(answers.id) as answers_count').where(status: false).group(:id).order("count(answers.id) ASC")
+    #limit(50).left_outer_joins(:answers).distinct.select('questions.id, COUNT(answers.id) AS answers_count').group('questions.id')
+  end
+
+
 end
