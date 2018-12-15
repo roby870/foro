@@ -25,8 +25,15 @@ before_action :check_token, only: [:create, :update, :resolve, :destroy]
     end
   end
 
-  def index
+  def show
+    if question = Question.exists(params[:id])
+      render json: question
+    else
+      render json: {"error": "parametro invalido"}, status: 422
+    end
+  end
 
+  def index
     if request.request_parameters[:sort].nil?
       questions = Question.fifty_latest
       render json: questions
@@ -43,7 +50,6 @@ before_action :check_token, only: [:create, :update, :resolve, :destroy]
     else
       render json: {"error": "parametro invalido"}, status: 422
     end
-
   end
 
   def update
