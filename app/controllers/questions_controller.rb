@@ -78,7 +78,7 @@ before_action :check_token, only: [:create, :update, :resolve, :destroy]
   end
 
   def create
-    if(request.request_parameters[:title].nil? | request.request_parameters[:description].nil?) #VALIDAR SIEMPRE LA PRESENCIA DE LOS PARAMETROS
+    if(request.request_parameters[:title].nil? | request.request_parameters[:description].nil?)
       render json: JSON.pretty_generate({"errors": ["error":"Faltan parametros, no se pudo crear"]}), status: 422
     else
       user = find_user_by_token
@@ -142,7 +142,9 @@ before_action :check_token, only: [:create, :update, :resolve, :destroy]
 
   def resolve
     user = find_user_by_token
-    if question = Question.check_user_has_question(user, params[:id])
+    if Question.is_answered(params[:id])
+      render json: JSON.pretty_generate({"errors": ["error": "la pregunta ya tiene una respuesta correcta"]}), status: 422
+    elsif question = Question.check_user_has_question(user, params[:id])
       if (Answer.is_answer_of(request.request_parameters[:answer_id],params[:id]))
         Answer.mark_as_correct(request.request_parameters[:answer_id])
         Question.mark_as_resolved(params[:id])
