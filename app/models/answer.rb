@@ -46,4 +46,9 @@ class Answer < ApplicationRecord
   def self.question_has_answers(id)
     find_by(question_id: id)
   end
+
+  def self.all_answers_for_question(question_id)
+    where(question_id: question_id)
+  end
+
 end
