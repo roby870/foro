@@ -37,7 +37,7 @@ class QuestionTest < ActiveSupport::TestCase
   end
 
   test "marcar una pregunta como respondida" do
-    Question.mark_as_resolved questions(:pregunta).id
+    Question.mark_as_resolved questions(:pregunta).id, answers(:respuesta).id
     assert Question.find_by(id: questions(:pregunta).id, status: true)
   end
 

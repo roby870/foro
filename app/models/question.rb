@@ -4,6 +4,7 @@ class Question < ApplicationRecord
   validates :user_id, presence: true
 
   has_many :answers
+  has_one :answer
   has_many :users, through: :answers
   belongs_to :user
   validates_associated :user
@@ -26,9 +27,10 @@ class Question < ApplicationRecord
     question.save
   end
 
-  def self.mark_as_resolved(id)
+  def self.mark_as_resolved(id, answer_id)
     question = find_by(id: id)
     question.status = true
+    question.answer_id=answer_id
     question.save
   end
 

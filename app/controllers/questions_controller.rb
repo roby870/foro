@@ -35,6 +35,12 @@ before_action :check_token, only: [:create, :update, :resolve, :destroy]
                         "id": question.user_id
                   }
               },
+              "answer": {
+                  "data": {
+                        "type": "answers",
+                        "id": question.answer_id
+                  }
+              },
               "answers": {
                   "links": {
                       "related": "http://0.0.0.0:3000/questions/#{question.id}?include=answers"
@@ -98,7 +104,7 @@ before_action :check_token, only: [:create, :update, :resolve, :destroy]
 
   def show
     if question = Question.exists(params[:id])
-      if (params[:include].nil? | !(params[:include].eql?"answers"))  
+      if (params[:include].nil? | !(params[:include].eql?"answers"))
         render json: JSON.pretty_generate(question_api_json(question)), status: 200
       else
         answers = Answer.all_answers_for_question(params[:id])
@@ -152,7 +158,7 @@ before_action :check_token, only: [:create, :update, :resolve, :destroy]
     elsif question = Question.check_user_has_question(user, params[:id])
       if (Answer.is_answer_of(params[:answer_id],params[:id]))
         Answer.mark_as_correct(params[:answer_id])
-        Question.mark_as_resolved(params[:id])
+        Question.mark_as_resolved(params[:id], params[:answer_id])
         render status: 200
       else
         render json: JSON.pretty_generate({"errors": ["error": "la pregunta y la respuesta indicadas en los parametros no se corresponden"]}), status: 422
