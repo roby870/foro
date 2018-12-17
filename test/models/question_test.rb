@@ -46,5 +46,8 @@ class QuestionTest < ActiveSupport::TestCase
     assert_not Question.find_by(id: questions(:pregunta).id)
   end
 
+  test "pregunta ya respondida" do
+    assert Question.is_answered(questions(:terceraPregunta).id)
+  end
 
 end

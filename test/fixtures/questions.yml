@@ -11,3 +11,10 @@ otraPregunta:
   description: "cada vez que uso el comando migrate, me lanza una excepcion"
   status: false
   user_id: 2
+
+terceraPregunta:
+  id: 3
+  title: "operar floats"
+  description: "cada vez que realizo una operacion, me lanza una excepcion"
+  status: true
+  user_id: 2
