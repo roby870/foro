@@ -105,16 +105,16 @@ before_action :check_token, only: [:create, :update, :resolve, :destroy]
   end
 
   def index
-    if request.request_parameters[:sort].nil?
+    if params[:sort].nil?
       questions = Question.fifty_latest
       questions_api_json(questions)
-    elsif request.request_parameters[:sort].eql? "latest"
+    elsif params[:sort].eql? "latest"
       questions = Question.fifty_latest
       questions_api_json(questions)
-    elsif request.request_parameters[:sort].eql? "pending_first"
+    elsif params[:sort].eql? "pending_first"
        questions = Question.fifty_pending
        questions_api_json(questions)
-    elsif request.request_parameters[:sort].eql? "needing_help"
+    elsif params[:sort].eql? "needing_help"
       questions = Question.fifty_needing_help
       questions_api_json(questions)
     else
@@ -145,8 +145,8 @@ before_action :check_token, only: [:create, :update, :resolve, :destroy]
     if Question.is_answered(params[:id])
       render json: JSON.pretty_generate({"errors": ["error": "la pregunta ya tiene una respuesta correcta"]}), status: 422
     elsif question = Question.check_user_has_question(user, params[:id])
-      if (Answer.is_answer_of(request.request_parameters[:answer_id],params[:id]))
-        Answer.mark_as_correct(request.request_parameters[:answer_id])
+      if (Answer.is_answer_of(params[:answer_id],params[:id]))
+        Answer.mark_as_correct(params[:answer_id])
         Question.mark_as_resolved(params[:id])
         render status: 200
       else
