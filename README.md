@@ -1,24 +1,21 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
 
-Things you may want to cover:
 
-* Ruby version
+Luego de clonar el repositorio, ejecutar en el directorio raíz del directorio clonado:
 
-* System dependencies
+bundle install
 
-* Configuration
+para instalar todas las dependencias que utiliza el proyecto. Luego, siempre en el directorio clonado, ejecutar:
 
-* Database creation
+rails db:migrate
 
-* Database initialization
+para generar la base de datos. La api corre localmente ejecutando en el directorio del proyecto:
 
-* How to run the test suite
+bundle exec rails s
 
-* Services (job queues, cache servers, search engines, etc.)
+Puma escucha las peticiones en tcp://0.0.0.0:3000
 
-* Deployment instructions
+Para correr todos los tests, ejecutar en el directorio del proyecto:
 
-* ...
+rails test
