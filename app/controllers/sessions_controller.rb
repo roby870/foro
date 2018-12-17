@@ -9,7 +9,6 @@ class SessionsController < ApplicationController
     if user = User.authenticate(params[:username], params[:password])
       token = SecureRandom.uuid.gsub(/\-/,'')
       User.save_token(user, token)
-      response.headers["Content-Type"] = "application/json"
       render json: JSON.pretty_generate({"data": [{
           "type":"users",
           "id":user.id,
