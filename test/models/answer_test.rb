@@ -51,4 +51,9 @@ class AnswerTest < ActiveSupport::TestCase
      assert Answer.find_by(id: answers(:respuesta).id)
    end
 
+   test "chequeo de la existencia de respuestas asociadas a preguntas" do
+     assert Answer.question_has_answers(questions(:pregunta).id)
+     assert_not Answer.question_has_answers(questions(:otraPregunta).id)
+   end
+
 end
