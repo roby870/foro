@@ -34,6 +34,11 @@ before_action :check_token, only: [:create, :update, :resolve, :destroy]
                         "type": "users",
                         "id": question.user_id
                   }
+              },
+              "answers": {
+                  "links": {
+                      "related": "http://0.0.0.0:3000/questions/#{question.id}/?included=true"
+                  }
               }
         }
     } ] }
@@ -93,7 +98,7 @@ before_action :check_token, only: [:create, :update, :resolve, :destroy]
 
   def show
     if question = Question.exists(params[:id])
-      if request.request_parameters[:included].nil?
+      if params[:included].nil?
         render json: JSON.pretty_generate(question_api_json(question)), status: 200
       else
         answers = Answer.all_answers_for_question(params[:id])
