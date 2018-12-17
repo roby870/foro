@@ -50,6 +50,9 @@ class AnswersController < ApplicationController
                     "data":{
                         "type": "questions",
                         "id": answer.question_id
+                    },
+                    "links": {
+                        "related": "http://0.0.0.0:3000/questions/#{answer.question_id}"
                     }
                 }
         }
